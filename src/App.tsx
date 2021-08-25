@@ -1,56 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
+import React, { useEffect } from 'react';
+import { findTicket, getMovieSchedules } from './api/movie.api';
 import './App.css';
+import Movies from './features/movies/Movies';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
+    <div className="container">
+      <div className="area-search">
+        <div className="search-bg">
+          <video src="/video/background.mp4" autoPlay loop muted />
+          <div className="video-cover"></div>
+        </div>
+        <div className="search">
+          <input type="text" placeholder="search movie ticket" onKeyPress={(e) => {
+            if (e.key === 'Enter') {
+              if (e.currentTarget.value) {
+                findTicket(e.currentTarget.value);
+                e.currentTarget.value = "";
+              }
+            }
+          }} />
+        </div>
+      </div>
+      <div className="area-result">
+        <Movies />
+      </div>
     </div>
   );
 }
