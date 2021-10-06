@@ -11,7 +11,18 @@ export const fetchMovies = createAsyncThunk(
     } = await getMovieSchedules();
 
     if (ResultMessage === "성공") {
+      
+      console.log(ResultSchedule.ScheduleList);
+      const movieMap = new Map(); 
       return ResultSchedule?.ScheduleList.reduce((movies: any, schedule: any, index: number) => {
+        const data = movieMap.get(schedule.MovieNmKor);
+        if (data) {
+          data.push(schedule);
+          movieMap.set(schedule.MovieNmKor, data);
+        } else {
+          movieMap.set(schedule.MovieNmKor, [schedule]);
+        } 
+
         movies.push({
           id: index,
           code: schedule.MovieCd,
