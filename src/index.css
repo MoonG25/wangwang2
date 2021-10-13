@@ -6,3 +6,7 @@
 body {
   background-color: #eee;
 }
+
+.m1 {
+  margin: 1em 0;
+}

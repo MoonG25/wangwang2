@@ -3,3 +3,13 @@
   height: 44px;
   max-height: 44px;
 }
+
+.hint {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  line-height: 44px;
+  background-color: #c99cd2;
+  color: white;
+  font-weight: 200;
+}

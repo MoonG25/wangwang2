@@ -10,7 +10,7 @@ const Movies = () => {
     dispatch(fetchMovies());
   }, [dispatch]);
   return (
-    <div className="gallery">
+    <div className="horizontal-scroll">
       {
         allMovies.map((movie: any, movieIdx) => <Movie key={movieIdx} movie={movie} />)
       }

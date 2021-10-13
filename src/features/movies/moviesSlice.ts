@@ -1,46 +1,50 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from "@reduxjs/toolkit";
-import { getMovieSchedules } from "../../api/movie.api";
+import { getComingSoon, getMovieSchedules } from "../../api/movie.api";
 import { RootState } from "../../app/store";
 
 export const fetchMovies = createAsyncThunk(
   'movies/fetchMovies',
   async () => {
-    const {
-      ResultMessage,
-      ResultSchedule,
-    } = await getMovieSchedules();
 
-    if (ResultMessage === "성공") {
-      
-      console.log(ResultSchedule.ScheduleList);
-      const movieMap = new Map(); 
-      return ResultSchedule?.ScheduleList.reduce((movies: any, schedule: any, index: number) => {
-        const data = movieMap.get(schedule.MovieNmKor);
-        if (data) {
-          data.push(schedule);
-          movieMap.set(schedule.MovieNmKor, data);
-        } else {
-          movieMap.set(schedule.MovieNmKor, [schedule]);
-        } 
+    const response = await getComingSoon();
+    return response?.map((item: any, index: number) => ({
+      id: index,
+      ...item,
+    })) || [];
 
-        movies.push({
-          id: index,
-          code: schedule.MovieCd,
-          name: schedule.MovieNmKor,
-          start: schedule.PlayStartTm,
-          end: schedule.PlayEndTm,
-          theater: schedule.TheaterNm,
-          runningTime: schedule.RunningTime,
-          poster: schedule.PosterImageUrl,
-          date: schedule.PlayYmd,
-          screen: schedule.ScreenNm,
-          screenRating: schedule.ScreenRatingNm,
-        })
-        return movies;
-      }, [])
-    }
+    // const {
+    //   ResultMessage,
+    //   ResultSchedule,
+    // } = await getMovieSchedules();
 
-    return [];
+    // if (ResultMessage === "성공") {
+    //   const movieMap = new Map(); 
+    //   return ResultSchedule?.ScheduleList.reduce((movies: any, schedule: any, index: number) => {
+    //     const data = movieMap.get(schedule.MovieNmKor);
+    //     if (data) {
+    //       data.push(schedule);
+    //       movieMap.set(schedule.MovieNmKor, data);
+    //     } else {
+    //       movieMap.set(schedule.MovieNmKor, [schedule]);
+    //     } 
+
+    //     movies.push({
+    //       id: index,
+    //       code: schedule.MovieCd,
+    //       name: schedule.MovieNmKor,
+    //       start: schedule.PlayStartTm,
+    //       end: schedule.PlayEndTm,
+    //       theater: schedule.TheaterNm,
+    //       runningTime: schedule.RunningTime,
+    //       poster: schedule.PosterImageUrl,
+    //       date: schedule.PlayYmd,
+    //       screen: schedule.ScreenNm,
+    //       screenRating: schedule.ScreenRatingNm,
+    //     })
+    //     return movies;
+    //   }, [])
+    // }
+    // return [];
   }
 )
 

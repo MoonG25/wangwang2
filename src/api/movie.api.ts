@@ -1,5 +1,10 @@
 import axios from "axios";
 
+export const getComingSoon = async () => {
+  const response = await axios.get('/cgv/soon');
+  return response.data;
+};
+
 export const getMovieSchedules = async () => {
   const response = await axios.post('/cgv/schedule', {
     strMovieGroupCd: "",
